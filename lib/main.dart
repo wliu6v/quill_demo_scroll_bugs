@@ -32,6 +32,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool useEditText = false;
+  bool enableQuillScroll = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,10 +62,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         SliverFillRemaining(
-          hasScrollBody: false,
+          hasScrollBody: !useEditText && enableQuillScroll,
           // change the child to see how it worked.
-          child: _quillEditor(),
-          // child: _textEditor(),
+          child: useEditText ? _textEditor() : _quillEditor(),
         ),
         SliverToBoxAdapter(
           child: Column(
@@ -95,11 +97,11 @@ class _MyHomePageState extends State<MyHomePage> {
       controller: _controller,
       focusNode: _focusNode,
       scrollController: _scrollController,
-      scrollable: false,
+      scrollable: enableQuillScroll,
       padding: EdgeInsets.zero,
       autoFocus: false,
       readOnly: false,
-      expands: true,
+      expands: !enableQuillScroll,
     );
   }
 
